@@ -54,11 +54,11 @@ namespace Startup
         /// <returns>a decimal representing the TimeDiff in time units specified by the given [TimeTracker.TimeFormat].</returns>
         public decimal GetLapTimeDiff(string startLap, string endLap, TimeFormat format = TimeFormat.Milliseconds)
         {
+            signal.Set();
             if (!TrackList.ContainsKey(startLap)) throw new Exception(String.Format("Starting Lap '{0}' cannot be found.", startLap));
             if (!TrackList.ContainsKey(endLap)) throw new Exception(String.Format("Ending Lap '{0}' cannot be found.", endLap));
             decimal result = CalculateTime(TrackList[endLap] - TrackList[startLap], format);
             FIFO = result;
-            signal.Set();
             return result;
         }
         
